@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: sudo apt-get update && sudo apt-get -y install qmake6 qt6-base-dev
-    - run: qmake
+    - run: qmake6
     - name: Build
       run: |
         make
