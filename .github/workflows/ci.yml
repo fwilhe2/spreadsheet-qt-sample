@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - run: sudo apt-get update && sudo apt-get -y install qmake qt6-base-dev
+    - run: sudo apt-get update && sudo apt-get -y install qmake6 qt6-base-dev
     - run: qmake
     - name: Build
       run: |
