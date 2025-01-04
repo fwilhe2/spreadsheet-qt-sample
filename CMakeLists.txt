@@ -6,14 +6,12 @@ project(spreadsheet LANGUAGES CXX)
 
 find_package(Qt6
     REQUIRED COMPONENTS Core Gui Widgets
-    OPTIONAL_COMPONENTS PrintSupport
 )
 
 qt_standard_project_setup()
 
 qt_add_executable(spreadsheet
     main.cpp
-    printview.cpp printview.h
     spreadsheet.cpp spreadsheet.h
     spreadsheetdelegate.cpp spreadsheetdelegate.h
     spreadsheetitem.cpp spreadsheetitem.h
@@ -29,10 +27,6 @@ target_link_libraries(spreadsheet PRIVATE
     Qt6::Gui
     Qt6::Widgets
 )
-
-if (TARGET Qt6::PrintSupport)
-    target_link_libraries(spreadsheet PRIVATE Qt6::PrintSupport)
-endif()
 
 # Resources:
 set(spreadsheet_resource_files

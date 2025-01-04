@@ -31,8 +31,6 @@ public slots:
     void clear();
     void showAbout();
 
-    void print();
-
     void actionSum();
     void actionSubtract();
     void actionAdd();
@@ -67,8 +65,6 @@ private:
     QAction *clearAction;
     QAction *aboutSpreadSheet;
     QAction *exitAction;
-
-    QAction *printAction;
 
     QLabel *cellLabel;
     QTableWidget *table;

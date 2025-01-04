@@ -9,9 +9,8 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    SpreadSheet sheet(10, 6);
+    SpreadSheet sheet(100, 100);
     sheet.setWindowIcon(QPixmap(":/images/interview.png"));
     sheet.show();
-    sheet.layout()->setSizeConstraint(QLayout::SetFixedSize);
     return app.exec();
 }

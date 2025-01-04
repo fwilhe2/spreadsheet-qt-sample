@@ -4,12 +4,8 @@
 #include "spreadsheet.h"
 #include "spreadsheetdelegate.h"
 #include "spreadsheetitem.h"
-#include "printview.h"
 
 #include <QtWidgets>
-#if defined(QT_PRINTSUPPORT_LIB)
-#include <QtPrintSupport>
-#endif
 
 SpreadSheet::SpreadSheet(int rows, int cols, QWidget *parent)
     : QMainWindow(parent),
@@ -96,9 +92,6 @@ void SpreadSheet::createActions()
     exitAction = new QAction(tr("E&xit"), this);
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-    printAction = new QAction(tr("&Print"), this);
-    connect(printAction, &QAction::triggered, this, &SpreadSheet::print);
-
     firstSeparator = new QAction(this);
     firstSeparator->setSeparator(true);
 
@@ -111,7 +104,6 @@ void SpreadSheet::setupMenuBar()
 {
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 //! [implicit tr context]
-    fileMenu->addAction(printAction);
     fileMenu->addAction(exitAction);
 
     QMenu *cellMenu = menuBar()->addMenu(tr("&Cell"));
@@ -440,118 +432,7 @@ void SpreadSheet::setupContextMenu()
 
 void SpreadSheet::setupContents()
 {
-    QBrush titleBackground(Qt::lightGray);
-    QFont titleFont = table->font();
-    titleFont.setBold(true);
 
-    // column 0
-    table->setItem(0, 0, new SpreadSheetItem("Item"));
-    table->item(0, 0)->setBackground(titleBackground);
-    table->item(0, 0)->setToolTip("This column shows the purchased item/service");
-    table->item(0, 0)->setFont(titleFont);
-
-    table->setItem(1, 0, new SpreadSheetItem("AirportBus"));
-    table->setItem(2, 0, new SpreadSheetItem("Flight (Munich)"));
-    table->setItem(3, 0, new SpreadSheetItem("Lunch"));
-    table->setItem(4, 0, new SpreadSheetItem("Flight (LA)"));
-    table->setItem(5, 0, new SpreadSheetItem("Taxi"));
-    table->setItem(6, 0, new SpreadSheetItem("Dinner"));
-    table->setItem(7, 0, new SpreadSheetItem("Hotel"));
-    table->setItem(8, 0, new SpreadSheetItem("Flight (Oslo)"));
-    table->setItem(9, 0, new SpreadSheetItem("Total:"));
-
-    table->item(9, 0)->setFont(titleFont);
-    table->item(9, 0)->setBackground(titleBackground);
-
-    // column 1
-    table->setItem(0, 1, new SpreadSheetItem("Date"));
-    table->item(0, 1)->setBackground(titleBackground);
-    table->item(0, 1)->setToolTip("This column shows the purchase date, double click to change");
-    table->item(0, 1)->setFont(titleFont);
-
-    table->setItem(1, 1, new SpreadSheetItem("15/6/2006"));
-    table->setItem(2, 1, new SpreadSheetItem("15/6/2006"));
-    table->setItem(3, 1, new SpreadSheetItem("15/6/2006"));
-    table->setItem(4, 1, new SpreadSheetItem("21/5/2006"));
-    table->setItem(5, 1, new SpreadSheetItem("16/6/2006"));
-    table->setItem(6, 1, new SpreadSheetItem("16/6/2006"));
-    table->setItem(7, 1, new SpreadSheetItem("16/6/2006"));
-    table->setItem(8, 1, new SpreadSheetItem("18/6/2006"));
-
-    table->setItem(9, 1, new SpreadSheetItem());
-    table->item(9, 1)->setBackground(titleBackground);
-
-    // column 2
-    table->setItem(0, 2, new SpreadSheetItem("Price"));
-    table->item(0, 2)->setBackground(titleBackground);
-    table->item(0, 2)->setToolTip("This column shows the price of the purchase");
-    table->item(0, 2)->setFont(titleFont);
-
-    table->setItem(1, 2, new SpreadSheetItem("150"));
-    table->setItem(2, 2, new SpreadSheetItem("2350"));
-    table->setItem(3, 2, new SpreadSheetItem("-14"));
-    table->setItem(4, 2, new SpreadSheetItem("980"));
-    table->setItem(5, 2, new SpreadSheetItem("5"));
-    table->setItem(6, 2, new SpreadSheetItem("120"));
-    table->setItem(7, 2, new SpreadSheetItem("300"));
-    table->setItem(8, 2, new SpreadSheetItem("1240"));
-
-    table->setItem(9, 2, new SpreadSheetItem());
-    table->item(9, 2)->setBackground(Qt::lightGray);
-
-    // column 3
-    table->setItem(0, 3, new SpreadSheetItem("Currency"));
-    table->item(0, 3)->setBackground(titleBackground);
-    table->item(0, 3)->setToolTip("This column shows the currency");
-    table->item(0, 3)->setFont(titleFont);
-
-    table->setItem(1, 3, new SpreadSheetItem("NOK"));
-    table->setItem(2, 3, new SpreadSheetItem("NOK"));
-    table->setItem(3, 3, new SpreadSheetItem("EUR"));
-    table->setItem(4, 3, new SpreadSheetItem("EUR"));
-    table->setItem(5, 3, new SpreadSheetItem("USD"));
-    table->setItem(6, 3, new SpreadSheetItem("USD"));
-    table->setItem(7, 3, new SpreadSheetItem("USD"));
-    table->setItem(8, 3, new SpreadSheetItem("USD"));
-
-    table->setItem(9, 3, new SpreadSheetItem());
-    table->item(9, 3)->setBackground(Qt::lightGray);
-
-    // column 4
-    table->setItem(0, 4, new SpreadSheetItem("Ex. Rate"));
-    table->item(0, 4)->setBackground(titleBackground);
-    table->item(0, 4)->setToolTip("This column shows the exchange rate to NOK");
-    table->item(0, 4)->setFont(titleFont);
-
-    table->setItem(1, 4, new SpreadSheetItem("1"));
-    table->setItem(2, 4, new SpreadSheetItem("1"));
-    table->setItem(3, 4, new SpreadSheetItem("8"));
-    table->setItem(4, 4, new SpreadSheetItem("8"));
-    table->setItem(5, 4, new SpreadSheetItem("7"));
-    table->setItem(6, 4, new SpreadSheetItem("7"));
-    table->setItem(7, 4, new SpreadSheetItem("7"));
-    table->setItem(8, 4, new SpreadSheetItem("7"));
-
-    table->setItem(9, 4, new SpreadSheetItem());
-    table->item(9, 4)->setBackground(titleBackground);
-
-    // column 5
-    table->setItem(0, 5, new SpreadSheetItem("NOK"));
-    table->item(0, 5)->setBackground(titleBackground);
-    table->item(0, 5)->setToolTip("This column shows the expenses in NOK");
-    table->item(0, 5)->setFont(titleFont);
-
-    table->setItem(1, 5, new SpreadSheetItem("* C2 E2"));
-    table->setItem(2, 5, new SpreadSheetItem("* C3 E3"));
-    table->setItem(3, 5, new SpreadSheetItem("* C4 E4"));
-    table->setItem(4, 5, new SpreadSheetItem("* C5 E5"));
-    table->setItem(5, 5, new SpreadSheetItem("* C6 E6"));
-    table->setItem(6, 5, new SpreadSheetItem("* C7 E7"));
-    table->setItem(7, 5, new SpreadSheetItem("* C8 E8"));
-    table->setItem(8, 5, new SpreadSheetItem("* C9 E9"));
-
-    table->setItem(9, 5, new SpreadSheetItem("sum F2 F9"));
-    table->item(9, 5)->setBackground(titleBackground);
 }
 
 const char *htmlText =
@@ -588,18 +469,5 @@ void decode_pos(const QString &pos, int *row, int *col)
 QString encode_pos(int row, int col)
 {
     return QString(char16_t(col + 'A')) + QString::number(row + 1);
-}
-
-
-void SpreadSheet::print()
-{
-#if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printpreviewdialog)
-    QPrinter printer(QPrinter::ScreenResolution);
-    QPrintPreviewDialog dlg(&printer);
-    PrintView view;
-    view.setModel(table->model());
-    connect(&dlg, &QPrintPreviewDialog::paintRequested, &view, &PrintView::print);
-    dlg.exec();
-#endif
 }
 

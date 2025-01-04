@@ -1,11 +1,9 @@
 QT += widgets
 requires(qtConfig(treeview))
-qtHaveModule(printsupport): QT += printsupport
 #unix:qtHaveModule(dbus): QT += dbus widgets
 
-HEADERS += printview.h spreadsheet.h spreadsheetdelegate.h spreadsheetitem.h
+HEADERS += spreadsheet.h spreadsheetdelegate.h spreadsheetitem.h
 SOURCES += main.cpp \
-           printview.cpp \
            spreadsheet.cpp \
            spreadsheetdelegate.cpp \
            spreadsheetitem.cpp
