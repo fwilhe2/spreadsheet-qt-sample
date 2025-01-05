@@ -23,19 +23,10 @@ public:
 
 public slots:
     void updateStatus(QTableWidgetItem *item);
-    void updateColor(QTableWidgetItem *item);
     void updateLineEdit(QTableWidgetItem *item);
     void returnPressed();
-    void selectColor();
-    void selectFont();
     void clear();
     void showAbout();
-
-    void actionSum();
-    void actionSubtract();
-    void actionAdd();
-    void actionMultiply();
-    void actionDivide();
 
 protected:
     void setupContextMenu();
