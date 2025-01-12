@@ -66,6 +66,8 @@ private:
 void decode_pos(const QString &pos, int *row, int *col);
 QString encode_pos(int row, int col);
 
+void loadSpreadsheetFromXml(const QString &filePath);
+void saveSpreadsheetToXml(const QString &filePath, const QVector<QVector<QString>> &spreadsheetData);
 
 #endif // SPREADSHEET_H
 
